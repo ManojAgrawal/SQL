@@ -1,0 +1,7 @@
+/* selecting employee with highest salary by department */
+
+select a.empID, a.deptID, a.salary, a.ranking from 
+(select empID, deptID, salary, rank() over (partition by deptID order by salary desc) as ranking from emp) a where a.ranking = 1;
+
+select e.empID, e.deptID, e.salary from emp e join
+(select deptID, max(salary) as ms from emp group by deptID) d on e.deptID = d.deptID and e.salary = d.ms;
