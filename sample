@@ -5,3 +5,12 @@ select a.empID, a.deptID, a.salary, a.ranking from
 
 select e.empID, e.deptID, e.salary from emp e join
 (select deptID, max(salary) as ms from emp group by deptID) d on e.deptID = d.deptID and e.salary = d.ms;
+
+
+/* deleting duplicate rows */
+
+with cte as(
+select empid, deptid, salary, row_number() over(partition by empID, deptid, salary order by empid, deptid, salary) as rn from emp)
+
+delete from cte where rn > 1
+;
