@@ -6,6 +6,10 @@ select a.empID, a.deptID, a.salary, a.ranking from
 select e.empID, e.deptID, e.salary from emp e join
 (select deptID, max(salary) as ms from emp group by deptID) d on e.deptID = d.deptID and e.salary = d.ms;
 
+/* checking for duplicates */
+
+select empid, deptid, salary, count(*) as CNT from emp group by empid, deptid, salary having count(*) > 1;
+
 
 /* deleting duplicate rows */
 
